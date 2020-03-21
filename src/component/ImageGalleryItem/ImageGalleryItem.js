@@ -18,14 +18,20 @@ const ImageGalleryItemImage = styled.img`
   }
 `;
 
-const ImageGalleryItem = ({ webformatURL }) => (
+const ImageGalleryItem = ({ webformatURL, onImageClick, tags }) => (
   <ImageGalleryListItem>
-    <ImageGalleryItemImage src={webformatURL} alt="" />
+    <ImageGalleryItemImage
+      src={webformatURL}
+      alt={tags}
+      onClick={onImageClick}
+    />
   </ImageGalleryListItem>
 );
 
 ImageGalleryItem.propTypes = {
-  webformatURL: PropTypes.string.isRequired
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func.isRequired
 };
 
 export default ImageGalleryItem;

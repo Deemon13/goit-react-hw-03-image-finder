@@ -4,6 +4,7 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import Loader from "./Loader/Loader";
 import Notification from "./Notification/Notification";
 import SearchBar from "./Searchbar/Searchbar";
+import Modal from "./Modal/Modal";
 import Button from "./Button/Button";
 import imagesApi from "../services/imagesApi";
 
@@ -13,7 +14,8 @@ export default class App extends Component {
     loading: false,
     error: null,
     searchQuery: "",
-    page: 1
+    page: 1,
+    showModal: null
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,8 +51,16 @@ export default class App extends Component {
     this.setState({ searchQuery: query, page: 1, images: [] });
   };
 
+  openModalImage = largeImage => {
+    this.setState({ showModal: largeImage });
+  };
+
+  closeModalImage = () => {
+    this.setState({ showModal: null });
+  };
+
   render() {
-    const { images, loading, error } = this.state;
+    const { images, loading, error, showModal } = this.state;
     return (
       <Layout>
         <SearchBar onSubmit={this.handleSearchQuerySubmit} />
@@ -59,8 +69,22 @@ export default class App extends Component {
             message={`Whoops, something went wrong: ${error.message}`}
           />
         )}
-        {images.length > 0 && <ImageGallery images={images}></ImageGallery>}
+
+        {images.length > 0 && (
+          <ImageGallery
+            images={images}
+            onOpen={this.openModalImage}
+          ></ImageGallery>
+        )}
+
         {loading && <Loader />}
+
+        {showModal && (
+          <Modal closeModal={this.closeModalImage}>
+            <img src={showModal} alt="" />
+          </Modal>
+        )}
+
         {images.length > 0 && !loading && (
           <Button onClickButton={this.fetchImages} />
         )}

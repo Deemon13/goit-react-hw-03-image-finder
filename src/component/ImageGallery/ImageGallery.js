@@ -16,10 +16,15 @@ const ImageGalleryList = styled.ul`
   margin-right: auto;
 `;
 
-const ImageGallery = ({ images }) => (
+const ImageGallery = ({ images, onOpen }) => (
   <ImageGalleryList>
-    {images.map(({ id, webformatURL }) => (
-      <ImageGalleryItem key={id} webformatURL={webformatURL} />
+    {images.map(({ id, webformatURL, largeImageURL, tags }) => (
+      <ImageGalleryItem
+        key={id}
+        tags={tags}
+        webformatURL={webformatURL}
+        onImageClick={() => onOpen(largeImageURL)}
+      />
     ))}
   </ImageGalleryList>
 );
@@ -28,6 +33,8 @@ ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired
     })
   )
