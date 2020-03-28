@@ -15,7 +15,7 @@ export default class App extends Component {
     error: null,
     searchQuery: "",
     page: 1,
-    showModal: null
+    showModal: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,7 +26,7 @@ export default class App extends Component {
     }
     if (!this.state.loading) {
       window.scrollTo({
-        top: document.documentElement.scrollHeight,
+        top: document.body.scrollHeight,
         behavior: "smooth"
       });
     }
@@ -56,7 +56,7 @@ export default class App extends Component {
   };
 
   closeModalImage = () => {
-    this.setState({ showModal: null });
+    this.setState({ showModal: false });
   };
 
   render() {
